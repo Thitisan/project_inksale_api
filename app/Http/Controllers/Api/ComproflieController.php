@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Customer;
+use App\Comproflie;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CustomerResource;
+use App\Http\Resources\ComproflieResource;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class ComproflieController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::all();
+        $comprofile = Comproflie::all();
 
-        return new CustomerResource($customers);
+        return new ComproflieResource($comprofile);
     }
 
     /**
@@ -29,16 +29,15 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = new Customer();
-        $customer->name=$request->name;
-        $customer->address=$request->address;
-        $customer->phone=$request->phone;
+        $comprofile = new Comproflie();
+        $comprofile->name=$request->name;
+        $comprofile->address=$request->address;
+        $comprofile->phone=$request->phone;
 
-        if($customer->save()){
+        if($comprofile->save()){
             return['status'=>'data has been inserted'];
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -46,9 +45,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show(Comproflie $comprofile)
     {
-        return response()->json($customer);
+        return response()->json($comprofile);
     }
 
     /**
@@ -60,8 +59,8 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::where('id',$id);
-        $customer->update($request->all());
+        $comprofile = Comproflie::where('id',$id);
+        $comprofile->update($request->all());
         return['status'=>'data has been update'];
     }
 
@@ -73,6 +72,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        return Customer::destroy($id);
+        return Comproflie::destroy($id);
     }
 }

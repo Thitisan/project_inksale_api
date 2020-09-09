@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Customer;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CustomerResource;
+use App\Http\Resources\InkResource;
+use App\Ink;
+use App\Seller;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class InkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::all();
+        $Inks = Ink::all();
 
-        return new CustomerResource($customers);
+        return new InkResource($Inks);
     }
 
     /**
@@ -29,16 +30,14 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = new Customer();
-        $customer->name=$request->name;
-        $customer->address=$request->address;
-        $customer->phone=$request->phone;
+        $ink = new Ink();
+        $ink->name=$request->name;
+        $ink->price=$request->price;
 
-        if($customer->save()){
+        if($ink->save()){
             return['status'=>'data has been inserted'];
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -46,9 +45,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show(Ink $ink)
     {
-        return response()->json($customer);
+        return response()->json($ink);
     }
 
     /**
@@ -60,8 +59,8 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::where('id',$id);
-        $customer->update($request->all());
+        $ink = Ink::where('id',$id);
+        $ink->update($request->all());
         return['status'=>'data has been update'];
     }
 
@@ -73,6 +72,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        return Customer::destroy($id);
+        return Ink::destroy($id);
     }
 }

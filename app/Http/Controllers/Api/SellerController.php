@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Customer;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CustomerResource;
+use App\Http\Resources\SellerResource;
+use App\Ink;
+use App\Seller;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class SellerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::all();
+        $sellers = Seller::all();
 
-        return new CustomerResource($customers);
+        return new SellerResource($sellers);
     }
 
     /**
@@ -29,16 +30,16 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = new Customer();
-        $customer->name=$request->name;
-        $customer->address=$request->address;
-        $customer->phone=$request->phone;
+        $seller = new Seller();
+        $seller->name=$request->name;
+        $seller->nick_name=$request->nick_name;
+        $seller->phone=$request->phone;
+        $seller->email=$request->email;
 
-        if($customer->save()){
+        if($seller->save()){
             return['status'=>'data has been inserted'];
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -46,9 +47,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show(Seller $seller)
     {
-        return response()->json($customer);
+        return response()->json($seller);
     }
 
     /**
@@ -60,8 +61,8 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::where('id',$id);
-        $customer->update($request->all());
+        $seller = Seller::where('id',$id);
+        $seller->update($request->all());
         return['status'=>'data has been update'];
     }
 
@@ -73,6 +74,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        return Customer::destroy($id);
+        return Seller::destroy($id);
     }
 }

@@ -17,5 +17,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('customer/create',"Api\CustomerController@store");
-Route::delete('/customer/{id}/delete' , 'Api\CustomerController@destroy');
