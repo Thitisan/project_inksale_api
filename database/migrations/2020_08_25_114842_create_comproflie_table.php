@@ -13,7 +13,7 @@ class CreateComproflieTable extends Migration
      */
     public function up()
     {
-        Schema::create('comproflie', function (Blueprint $table) {
+        Schema::create('comproflies', function (Blueprint $table) {
             $table->id();
             $table->string('name',250);
             $table->string('phone',250);
@@ -29,6 +29,6 @@ class CreateComproflieTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comproflie');
+        Schema::dropIfExists('comproflies');
     }
 }
