@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\bill;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BillResource;
 use Illuminate\Http\Request;
 
 class BillController extends Controller
@@ -14,7 +16,9 @@ class BillController extends Controller
      */
     public function index()
     {
-        //
+        $bills = bill::all();
+
+        return new BillResource($bills);
     }
 
     /**
@@ -25,7 +29,15 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $bill = new bill();
+        $bill->customer_id=$request->customer_id;
+        $bill->seller_id=$request->seller_id;
+        $bill->ink_id=$request->ink_id;
+        $bill->amount=$request->amount;
+
+        if($bill->save()){
+            return['status'=>'data has been inserted'];
+        }
     }
 
     /**
@@ -48,7 +60,9 @@ class BillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $bill = bill::where('id',$id);
+        $bill->update($request->all());
+        return['status'=>'data has been update'];
     }
 
     /**
@@ -59,6 +73,6 @@ class BillController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return bill::destroy($id);
     }
 }
