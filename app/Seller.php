@@ -8,6 +8,6 @@ class Seller extends Model
 {
     public function bills()
     {
-        return $this->hasMany(bill::class, 'seller_id', 'id');
+        return $this->belongsToMany(bill::class, 'seller_id', 'id');
     }
 }

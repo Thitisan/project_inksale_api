@@ -18,13 +18,16 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post("login", "AuthController@login");
-Route::post("register", "AuthController@register");
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
 
-Route::group(["middleware" => "auth.jwt"], function () {
-    Route::get("logout", "AuthController@logout");
-
-
+], function ($router) {
+    Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::get('user-profile', 'AuthController@userProfile');
 });
 
 Route::apiResource('customers','Api\CustomerController');

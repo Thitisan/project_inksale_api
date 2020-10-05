@@ -8,14 +8,14 @@ class bill extends Model
 {
     public function ink()
     {
-        return $this->belongsTo(ink::class);
+        return $this->belongsToMany(ink::class);
     }
     public function seller()
     {
-        return $this->belongsTo(seller::class);
+        return $this->belongsToMany(seller::class);
     }
     public function customer()
     {
-        return $this->belongsTo(customer::class);
+        return $this->belongsToMany(customer::class);
     }
 }
