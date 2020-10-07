@@ -15,8 +15,8 @@ class CreateInksTable extends Migration
     {
         Schema::create('inks', function (Blueprint $table) {
             $table->id();
-            $table->string('name',200);
-            $table->float('price',8,2);
+            $table->string('ink_name',200);
+            $table->float('ink_price',8,2);
             $table->timestamps();
         });
     }

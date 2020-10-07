@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\bill;
+use App\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BillResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BillController extends Controller
 {
@@ -14,9 +16,36 @@ class BillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bills = bill::all();
+        if($request->seller_id && $request->customer_id){
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.id')
+            ->join('customers','bills.customer_id','=','customers.id')
+            ->join('sellers','bills.seller_id','=','sellers.id')
+            ->where('bills.seller_id','=',$request->seller_id)
+            ->where('bills.customer_id','=',$request->customer_id)
+            ->get();
+        }
+        else if($request->seller_id){
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.id')
+            ->join('customers','bills.customer_id','=','customers.id')
+            ->join('sellers','bills.seller_id','=','sellers.id')
+            ->where('bills.seller_id','=',$request->seller_id)
+            ->get();
+        }else if($request->customer_id){
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.id')
+            ->join('customers','bills.customer_id','=','customers.id')
+            ->join('sellers','bills.seller_id','=','sellers.id')
+            ->where('bills.customer_id','=',$request->customer_id)
+            ->get();
+        }else{
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.id')
+            ->join('customers','bills.customer_id','=','customers.id')
+            ->join('sellers','bills.seller_id','=','sellers.id')
+            ->get();
+        }
+
+
 
         return new BillResource($bills);
     }
