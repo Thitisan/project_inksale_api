@@ -31,10 +31,10 @@ class SellerController extends Controller
     public function store(Request $request)
     {
         $seller = new Seller();
-        $seller->name=$request->name;
-        $seller->nick_name=$request->nick_name;
-        $seller->phone=$request->phone;
-        $seller->email=$request->email;
+        $seller->seller_name=$request->name;
+        $seller->seller_nick_name=$request->nick_name;
+        $seller->seller_phone=$request->phone;
+        $seller->seller_email=$request->email;
 
         if($seller->save()){
             return['status'=>'data has been inserted'];

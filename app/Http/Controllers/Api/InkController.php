@@ -31,8 +31,8 @@ class InkController extends Controller
     public function store(Request $request)
     {
         $ink = new Ink();
-        $ink->name=$request->name;
-        $ink->price=$request->price;
+        $ink->ink_name=$request->name;
+        $ink->ink_price=$request->price;
 
         if($ink->save()){
             return['status'=>'data has been inserted'];

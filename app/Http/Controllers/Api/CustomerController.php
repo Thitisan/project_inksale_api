@@ -30,9 +30,9 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $customer = new Customer();
-        $customer->name=$request->name;
-        $customer->address=$request->address;
-        $customer->phone=$request->phone;
+        $customer->customer_name=$request->name;
+        $customer->customer_address=$request->address;
+        $customer->customer_phone=$request->phone;
 
         if($customer->save()){
             return['status'=>'data has been inserted'];
