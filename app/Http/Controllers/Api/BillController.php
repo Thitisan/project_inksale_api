@@ -19,29 +19,29 @@ class BillController extends Controller
     public function index(Request $request)
     {
         if($request->seller_id && $request->customer_id){
-            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.id')
-            ->join('customers','bills.customer_id','=','customers.id')
-            ->join('sellers','bills.seller_id','=','sellers.id')
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
+            ->join('customers','bills.customer_id','=','customers.customer_id')
+            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->where('bills.seller_id','=',$request->seller_id)
             ->where('bills.customer_id','=',$request->customer_id)
             ->get();
         }
         else if($request->seller_id){
-            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.id')
-            ->join('customers','bills.customer_id','=','customers.id')
-            ->join('sellers','bills.seller_id','=','sellers.id')
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
+            ->join('customers','bills.customer_id','=','customers.customer_id')
+            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->where('bills.seller_id','=',$request->seller_id)
             ->get();
         }else if($request->customer_id){
-            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.id')
-            ->join('customers','bills.customer_id','=','customers.id')
-            ->join('sellers','bills.seller_id','=','sellers.id')
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
+            ->join('customers','bills.customer_id','=','customers.customer_id')
+            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->where('bills.customer_id','=',$request->customer_id)
             ->get();
         }else{
-            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.id')
-            ->join('customers','bills.customer_id','=','customers.id')
-            ->join('sellers','bills.seller_id','=','sellers.id')
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
+            ->join('customers','bills.customer_id','=','customers.customer_id')
+            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->get();
         }
 

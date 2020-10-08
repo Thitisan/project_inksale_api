@@ -60,7 +60,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::where('id',$id);
+        $customer = Customer::where('customer_id',$id);
         $customer->update($request->all());
         return['status'=>'data has been update'];
     }
@@ -71,8 +71,8 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($customer_id)
     {
-        return Customer::destroy($id);
+        return Customer::destroy($customer_id);
     }
 }

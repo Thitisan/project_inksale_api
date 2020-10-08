@@ -59,7 +59,7 @@ class InkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ink = Ink::where('id',$id);
+        $ink = Ink::where('ink_id',$id);
         $ink->update($request->all());
         return['status'=>'data has been update'];
     }
@@ -70,8 +70,8 @@ class InkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($ink_id)
     {
-        return Ink::destroy($id);
+        return Ink::destroy($ink_id);
     }
 }

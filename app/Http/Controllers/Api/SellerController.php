@@ -61,7 +61,7 @@ class SellerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $seller = Seller::where('id',$id);
+        $seller = Seller::where('seller_id',$id);
         $seller->update($request->all());
         return['status'=>'data has been update'];
     }
@@ -72,8 +72,8 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($seller_id)
     {
-        return Seller::destroy($id);
+        return Seller::destroy($seller_id);
     }
 }
