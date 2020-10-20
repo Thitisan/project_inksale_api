@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\InkResource;
-use App\Ink;
-
+use App\Http\Resources\InvoicenumberResource;
 use Illuminate\Http\Request;
+use App\invoicenumbers;
 
-class InkController extends Controller
+class Invoicenumber extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,9 @@ class InkController extends Controller
      */
     public function index()
     {
-        $Inks = Ink::all();
+        $invoices = invoicenumbers::all();
 
-        return new InkResource($Inks);
+        return new InvoicenumberResource($invoices);
     }
 
     /**
@@ -30,12 +29,13 @@ class InkController extends Controller
      */
     public function store(Request $request)
     {
-        $ink = new Ink();
-        $ink->ink_name=$request->name;
-        $ink->ink_price=$request->price;
+        $invoice = new invoicenumbers();
+        $lastInvoiceID = $invoice->orderBy('invoicenumber_id')->pluck('invoicenumber_id')->last()+1;
+        $invoice->invoiceNo="IVN".date("Ymd"). str_pad($lastInvoiceID,4,'0', STR_PAD_LEFT);
 
-        if($ink->save()){
-            return['status'=>'data has been inserted'];
+
+        if($invoice->save()){
+            return['invoice'=>$invoice];
         }
     }
 
@@ -45,9 +45,11 @@ class InkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Ink $ink)
+    public function show($id)
     {
-        return response()->json($ink);
+        $invoices = invoicenumbers::find($id);
+
+        return new InvoicenumberResource($invoices);
     }
 
     /**
@@ -59,9 +61,7 @@ class InkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ink = Ink::where('ink_id',$id);
-        $ink->update($request->all());
-        return['status'=>'data has been update'];
+        //
     }
 
     /**
@@ -70,8 +70,8 @@ class InkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($ink_id)
+    public function destroy($invoice_id)
     {
-        return Ink::destroy($ink_id);
+        return invoicenumbers::destroy($invoice_id);
     }
 }

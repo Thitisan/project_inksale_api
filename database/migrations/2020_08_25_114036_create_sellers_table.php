@@ -14,7 +14,7 @@ class CreateSellersTable extends Migration
     public function up()
     {
         Schema::create('sellers', function (Blueprint $table) {
-            $table->id();
+            $table->id('seller_id');
             $table->string('seller_name',200);
             $table->string('seller_nick_name',200);
             $table->string('seller_phone',200);

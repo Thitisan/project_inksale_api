@@ -14,7 +14,7 @@ class CreateComproflieTable extends Migration
     public function up()
     {
         Schema::create('comproflies', function (Blueprint $table) {
-            $table->id();
+            $table->id('comproflie_id');
             $table->string('name',250);
             $table->string('phone',250);
             $table->string('address',250);

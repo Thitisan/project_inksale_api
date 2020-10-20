@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInksTable extends Migration
+class CreateInvoicenumbersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateInksTable extends Migration
      */
     public function up()
     {
-        Schema::create('inks', function (Blueprint $table) {
-            $table->id('ink_id');
-            $table->string('ink_name',200);
-            $table->float('ink_price',8,2);
+        Schema::create('invoicenumbers', function (Blueprint $table) {
+            $table->id('invoicenumber_id');
+            $table->string('invoiceNo',250);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateInksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inks');
+        Schema::dropIfExists('invoicenumbers');
     }
 }

@@ -14,10 +14,11 @@ class CreateBillsTable extends Migration
     public function up()
     {
         Schema::create('bills', function (Blueprint $table) {
-            $table->id();
+            $table->id('bill_id');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('ink_id');
+            $table->unsignedBigInteger('invoicenumber_id');
             $table->integer('amount');
             $table->timestamps();
         });

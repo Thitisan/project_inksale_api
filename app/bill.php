@@ -18,4 +18,8 @@ class bill extends Model
     {
         return $this->belongsToMany(customer::class);
     }
+    public function invoices()
+    {
+        return $this->hasOne(invoicenumbers::class,'id','invoicenumber_id');
+    }
 }

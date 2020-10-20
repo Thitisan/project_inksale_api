@@ -18,10 +18,12 @@ class BillController extends Controller
      */
     public function index(Request $request)
     {
+
         if($request->seller_id && $request->customer_id){
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
             ->join('customers','bills.customer_id','=','customers.customer_id')
             ->join('sellers','bills.seller_id','=','sellers.seller_id')
+            ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->where('bills.seller_id','=',$request->seller_id)
             ->where('bills.customer_id','=',$request->customer_id)
             ->get();
@@ -30,25 +32,34 @@ class BillController extends Controller
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
             ->join('customers','bills.customer_id','=','customers.customer_id')
             ->join('sellers','bills.seller_id','=','sellers.seller_id')
+            ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->where('bills.seller_id','=',$request->seller_id)
             ->get();
         }else if($request->customer_id){
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
             ->join('customers','bills.customer_id','=','customers.customer_id')
             ->join('sellers','bills.seller_id','=','sellers.seller_id')
+            ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->where('bills.customer_id','=',$request->customer_id)
+            ->get();
+        }else if($request->invoiceNo){
+            $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
+            ->join('customers','bills.customer_id','=','customers.customer_id')
+            ->join('sellers','bills.seller_id','=','sellers.seller_id')
+            ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
+            ->where('invoicenumbers.invoiceNo','=',$request->invoiceNo)
             ->get();
         }else{
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
             ->join('customers','bills.customer_id','=','customers.customer_id')
             ->join('sellers','bills.seller_id','=','sellers.seller_id')
+            ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->get();
         }
 
-
-
         return new BillResource($bills);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -61,6 +72,7 @@ class BillController extends Controller
         $bill = new bill();
         $bill->customer_id=$request->customer_id;
         $bill->seller_id=$request->seller_id;
+        $bill->invoicenumber_id=$request->invoicenumber_id;
         $bill->ink_id=$request->ink_id;
         $bill->amount=$request->amount;
 
@@ -77,7 +89,7 @@ class BillController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

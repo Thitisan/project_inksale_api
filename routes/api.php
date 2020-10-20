@@ -52,9 +52,14 @@ Route::delete('/sellers/{id}/delete' , 'Api\SellerController@destroy');
 
 Route::apiResource('bills','Api\BillController');
 Route::post('bills/create',"Api\BillController@store");
+Route::get('bills/{id}/get',"Api\BillController@show");
 Route::put('bills/update/{id}','Api\BillController@update');
 Route::delete('/bills/{id}/delete' , 'Api\BillController@destroy');
 
+Route::apiResource('invoice','Api\invoicenumber');
+Route::get('invoice/{id}/get',"Api\invoicenumber@show");
+Route::post('invoice/create',"Api\invoicenumber@store");
+Route::delete('/invoice/{id}/delete' , 'Api\invoicenumber@destroy');
 
 
 
