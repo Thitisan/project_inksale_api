@@ -7,6 +7,7 @@ use App\Http\Resources\SellerResource;
 use App\Ink;
 use App\Seller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SellerController extends Controller
 {
@@ -15,9 +16,16 @@ class SellerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sellers = Seller::all();
+        if($request->user_id){
+            $sellers=DB::table('sellers')
+            ->where('user_id','=',$request->user_id)
+            ->get();
+        }else{
+            $sellers = Seller::all();
+        }
+
 
         return new SellerResource($sellers);
     }
@@ -35,6 +43,7 @@ class SellerController extends Controller
         $seller->seller_nick_name=$request->nick_name;
         $seller->seller_phone=$request->phone;
         $seller->seller_email=$request->email;
+        $seller->user_id=$request->user_id;
 
         if($seller->save()){
             return['status'=>'data has been inserted'];

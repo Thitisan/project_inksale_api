@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\InvoicenumberResource;
 use Illuminate\Http\Request;
 use App\invoicenumbers;
-
+use Illuminate\Support\Facades\DB;
 class Invoicenumber extends Controller
 {
     /**
@@ -14,9 +14,35 @@ class Invoicenumber extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = invoicenumbers::all();
+        if($request->seller_id && $request->customer_id){
+            $invoices=DB::table('invoicenumbers')->join('customers','invoicenumbers.customer_id','=','customers.customer_id')
+            ->join('sellers','invoicenumbers.seller_id','=','sellers.seller_id')
+            ->where('invoicenumbers.seller_id','=',$request->seller_id)
+            ->where('invoicenumbers.customer_id','=',$request->customer_id)
+            ->get();
+        }
+        else if($request->seller_id){
+            $invoices=DB::table('invoicenumbers')->join('customers','invoicenumbers.customer_id','=','customers.customer_id')
+            ->join('sellers','invoicenumbers.seller_id','=','sellers.seller_id')
+            ->where('invoicenumbers.seller_id','=',$request->seller_id)
+            ->get();
+        }else if($request->customer_id){
+            $invoices=DB::table('invoicenumbers')->join('customers','invoicenumbers.customer_id','=','customers.customer_id')
+            ->join('sellers','invoicenumbers.seller_id','=','sellers.seller_id')
+            ->where('invoicenumbers.customer_id','=',$request->customer_id)
+            ->get();
+        }else if($request->invoiceNo){
+            $invoices=DB::table('invoicenumbers')->join('customers','invoicenumbers.customer_id','=','customers.customer_id')
+            ->join('sellers','invoicenumbers.seller_id','=','sellers.seller_id')
+            ->where('invoicenumbers.invoiceNo','=',$request->invoiceNo)
+            ->get();
+        }else{
+            $invoices=DB::table('invoicenumbers')->join('customers','invoicenumbers.customer_id','=','customers.customer_id')
+            ->join('sellers','invoicenumbers.seller_id','=','sellers.seller_id')
+            ->get();
+        }
 
         return new InvoicenumberResource($invoices);
     }
@@ -32,7 +58,8 @@ class Invoicenumber extends Controller
         $invoice = new invoicenumbers();
         $lastInvoiceID = $invoice->orderBy('invoicenumber_id')->pluck('invoicenumber_id')->last()+1;
         $invoice->invoiceNo="IVN".date("Ymd"). str_pad($lastInvoiceID,4,'0', STR_PAD_LEFT);
-
+        $invoice->seller_id=$request->seller_id;
+        $invoice->customer_id=$request->customer_id;
 
         if($invoice->save()){
             return['invoice'=>$invoice];

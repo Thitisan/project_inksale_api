@@ -27,6 +27,14 @@ Route::group([
     Route::post('register', 'AuthController@register');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
+});
+
+Route::group([
+    'middleware' => 'jwt.auth',
+    'prefix' => 'auth'
+
+], function ($router) {
+
     Route::get('user-profile', 'AuthController@userProfile');
 });
 

@@ -51,6 +51,7 @@ class AuthController extends Controller {
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:6',
+
         ]);
 
         if($validator->fails()){
@@ -75,7 +76,7 @@ class AuthController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function logout() {
-        auth()->logout();
+        Auth::logout();
 
         return response()->json(['message' => 'User successfully signed out']);
     }
@@ -95,7 +96,7 @@ class AuthController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function userProfile() {
-        return response()->json(auth()->user());
+        return response()->json(['user' => auth()->user()]);
     }
 
     /**
@@ -107,8 +108,8 @@ class AuthController extends Controller {
      */
     protected function createNewToken($token){
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
+            'token' => $token,
+            'token_type' => 'Bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);

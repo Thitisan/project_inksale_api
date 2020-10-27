@@ -19,6 +19,7 @@ class CreateSellersTable extends Migration
             $table->string('seller_nick_name',200);
             $table->string('seller_phone',200);
             $table->string('seller_email',200);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

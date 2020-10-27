@@ -16,6 +16,8 @@ class CreateInvoicenumbersTable extends Migration
         Schema::create('invoicenumbers', function (Blueprint $table) {
             $table->id('invoicenumber_id');
             $table->string('invoiceNo',250);
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('customer_id');
             $table->timestamps();
         });
     }

@@ -21,8 +21,6 @@ class BillController extends Controller
 
         if($request->seller_id && $request->customer_id){
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
-            ->join('customers','bills.customer_id','=','customers.customer_id')
-            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->where('bills.seller_id','=',$request->seller_id)
             ->where('bills.customer_id','=',$request->customer_id)
@@ -30,29 +28,21 @@ class BillController extends Controller
         }
         else if($request->seller_id){
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
-            ->join('customers','bills.customer_id','=','customers.customer_id')
-            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->where('bills.seller_id','=',$request->seller_id)
             ->get();
         }else if($request->customer_id){
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
-            ->join('customers','bills.customer_id','=','customers.customer_id')
-            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->where('bills.customer_id','=',$request->customer_id)
             ->get();
         }else if($request->invoiceNo){
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
-            ->join('customers','bills.customer_id','=','customers.customer_id')
-            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->where('invoicenumbers.invoiceNo','=',$request->invoiceNo)
             ->get();
         }else{
             $bills=DB::table('bills')->join('inks','bills.ink_id','=','inks.ink_id')
-            ->join('customers','bills.customer_id','=','customers.customer_id')
-            ->join('sellers','bills.seller_id','=','sellers.seller_id')
             ->join('invoicenumbers','bills.invoicenumber_id','=','invoicenumbers.invoicenumber_id')
             ->get();
         }
@@ -69,16 +59,16 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
+
         $bill = new bill();
-        $bill->customer_id=$request->customer_id;
-        $bill->seller_id=$request->seller_id;
         $bill->invoicenumber_id=$request->invoicenumber_id;
         $bill->ink_id=$request->ink_id;
         $bill->amount=$request->amount;
-
         if($bill->save()){
             return['status'=>'data has been inserted'];
         }
+
+
     }
 
     /**
@@ -112,8 +102,8 @@ class BillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($invoicenumber_id)
     {
-        return bill::destroy($id);
+        return DB::table('bills')->where('invoicenumber_id','=',$invoicenumber_id)->delete();
     }
 }
