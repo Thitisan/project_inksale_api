@@ -60,6 +60,8 @@ class Invoicenumber extends Controller
         $invoice->invoiceNo="IVN".date("Ymd"). str_pad($lastInvoiceID,4,'0', STR_PAD_LEFT);
         $invoice->seller_id=$request->seller_id;
         $invoice->customer_id=$request->customer_id;
+        $invoice->sum_price = 0;
+
 
         if($invoice->save()){
             return['invoice'=>$invoice];
@@ -88,7 +90,9 @@ class Invoicenumber extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ink = invoicenumbers::where('invoicenumber_id','=',$request->invoicenumber_id);
+        $ink->update($request->all());
+        return['status'=>'data has been update'];
     }
 
     /**

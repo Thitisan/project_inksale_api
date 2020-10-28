@@ -67,6 +67,7 @@ Route::delete('/bills/{id}/delete' , 'Api\BillController@destroy');
 Route::apiResource('invoice','Api\invoicenumber');
 Route::get('invoice/{id}/get',"Api\invoicenumber@show");
 Route::post('invoice/create',"Api\invoicenumber@store");
+Route::put('invoice/update/{id}','Api\invoicenumber@update');
 Route::delete('/invoice/{id}/delete' , 'Api\invoicenumber@destroy');
 
 

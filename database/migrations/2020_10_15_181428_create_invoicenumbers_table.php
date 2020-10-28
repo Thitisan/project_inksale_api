@@ -18,6 +18,7 @@ class CreateInvoicenumbersTable extends Migration
             $table->string('invoiceNo',250);
             $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('customer_id');
+            $table->double('sum_price');
             $table->timestamps();
         });
     }
